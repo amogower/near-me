@@ -1,0 +1,34 @@
+version: '3'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  frontend:
+    env_file:
+      - ./.env
+    image: andigital-coding-exercise/frontend
+    networks:
+      - app-tier
+    ports:
+      - '80:3000'
+    build:
+      context: ./frontend
+      args:
+        - env=${ENVIRONMENT}
+
+  node:
+    env_file:
+      - ./.env
+    image: andigital-coding-exercise/node
+    networks:
+      - app-tier
+    ports:
+      - '3000:3000'
+    build:
+      context: ./node
+      args:
+        - env=${ENVIRONMENT}
+        - FOURSQUARE_CLIENT_ID=${FOURSQUARE_CLIENT_ID}
+        - FOURSQUARE_CLIENT_SECRET=${FOURSQUARE_CLIENT_SECRET}

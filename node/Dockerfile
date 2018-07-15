@@ -1,5 +1,4 @@
 FROM node:10.1.0-alpine as builder
-RUN apk update && apk add git
 WORKDIR /home
 COPY package.json ./
 COPY yarn.lock ./
@@ -10,7 +9,6 @@ COPY . .
 ARG FOURSQUARE_CLIENT_ID
 ARG FOURSQUARE_CLIENT_SECRET
 ENV FOURSQUARE_CLIENT_ID=${FOURSQUARE_CLIENT_ID} FOURSQUARE_CLIENT_SECRET=${FOURSQUARE_CLIENT_SECRET}
-RUN yarn build
 FROM node:10.1.0-alpine
 WORKDIR /home
 COPY --from=builder /home /home
