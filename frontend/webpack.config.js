@@ -1,15 +1,18 @@
 module.exports = {
   entry: './src/main.js',
-  mode: 'production',
+  mode: 'development',
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
         },
       },
     ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'],
   },
 };
