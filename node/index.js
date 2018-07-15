@@ -1,23 +1,20 @@
 require('babel-core/register');
-require('dotenv').config();
 
 const Koa = require('koa');
 const axios = require('axios');
+const cors = require('@koa/cors');
 
 const app = new Koa();
+
+app.use(cors({
+  origin: 'http://localhost',
+}));
 
 app.use(async (ctx, next) => {
   const start = Date.now();
   await next();
   const ms = Date.now() - start;
   ctx.set('X-Response-Time', `${ms}ms`);
-});
-
-app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  console.log(`${ctx.method} ${ctx.url} - ${ms}`);
 });
 
 app.use(async (ctx) => {
@@ -36,9 +33,8 @@ app.use(async (ctx) => {
 
     ctx.body = response.data;
   } catch (err) {
-    console.log(err);
+    throw new Error(err);
   }
 });
 
-app.listen(3000);
-
+app.listen(process.env.PORT || 3000);
