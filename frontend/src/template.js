@@ -4,6 +4,19 @@ module.exports = (title, { css, html }) => `
     <head>
       <meta charset="utf-8">
       <title>${title}</title>
+      <style>
+        *, ::after, ::before {
+          -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+        }
+        body {
+          color: #404d5b;
+          font-weight: 500;
+          font-size: 1.05em;
+          font-family: 'Raleway', Arial, sans-serif;
+          margin: 0;
+        }
+      </style>
       <style data-aphrodite>${css.content}</style>
     </head>
     <body>

@@ -1,54 +1,25 @@
 import React from 'react';
-import { bool, func } from 'prop-types';
+import { func } from 'prop-types';
+import { css } from 'aphrodite/no-important';
 
-import { suggestionsType } from '../../../prop-types';
+import { suggestionType } from '../../../prop-types';
+import styles from './styles';
 
-const AutoCompleteSuggestion = ({
-  getInputProps,
-  suggestions,
-  getSuggestionItemProps,
-  loading,
-}) => (
-  <div>
-    <input
-      {...getInputProps({
-        placeholder: 'Search places ...',
-        className: 'location-search-input',
-      })}
-    />
-    <div className="autocomplete-dropdown-container">
-      {
-        loading && (
-          <div>
-            Loading...
-          </div>
-        )
-      }
-      {suggestions.map((suggestion) => {
-        const className = suggestion.active
-          ? 'suggestion-item--active'
-          : 'suggestion-item';
-        return (
-          <div
-            {...getSuggestionItemProps(suggestion, {
-              className,
-            })}
-          >
-            <span>
-              {suggestion.description}
-            </span>
-          </div>
-        );
-      })}
-    </div>
+const AutoCompleteSuggestion = ({ getSuggestionItemProps, suggestion }) => (
+  <div
+    {...getSuggestionItemProps(suggestion, {
+      className: css(styles.suggestion, suggestion.active && styles.suggestion__active),
+    })}
+  >
+    <span className={css(styles.suggestionInner)}>
+      {suggestion.description}
+    </span>
   </div>
 );
 
 AutoCompleteSuggestion.propTypes = {
-  getInputProps: func.isRequired,
   getSuggestionItemProps: func.isRequired,
-  loading: bool.isRequired,
-  suggestions: suggestionsType.isRequired,
+  suggestion: suggestionType.isRequired,
 };
 
 export default AutoCompleteSuggestion;

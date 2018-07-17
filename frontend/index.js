@@ -13,7 +13,7 @@ app.use('/dist', express.static(path.resolve(__dirname, 'dist')));
 
 app.get('/', (req, res) => {
   const content = renderAppToString();
-  const response = template('Home | Restaurants', content);
+  const response = template('Home | Near Me', content);
 
   res.send(response);
 });
